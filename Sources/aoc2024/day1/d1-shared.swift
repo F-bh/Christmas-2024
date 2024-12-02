@@ -6,7 +6,7 @@ enum Panics: Error {
 
 
 func run_day_1(){
-   let path = Bundle.module.path(forResource: "task1", ofType:"txt", inDirectory: "inputs/day1")
+   let path = Bundle.module.path(forResource: "d1-task1", ofType:"txt", inDirectory: "inputs")
    let input: String = try! String(contentsOfFile: path!, encoding: .utf8)
 
    let lines = input.split(separator: "\n")
@@ -25,11 +25,14 @@ func run_day_1(){
       right.append(r)
    }
 
-   let combined = try! combine(left: left, right: right)
-   print(combined.reduce(0) { acc, val  in
-       acc + val.distance
-   })
+   let combined = try! combine(left: left, right: right) 
 
-   print(try! calc(left: left, right: right))
-   
+   let t1 = combined.reduce(0) { acc, val  in
+       acc + val.distance
+   }
+
+   let t2 = try! calc(left: left, right: right)
+
+   print("day 1 task 1: \(t1)", terminator: "\n")
+   print("day 1 task 2: \(t2)", terminator: "\n") 
 }

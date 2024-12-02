@@ -14,7 +14,7 @@ import Testing
         combination(left: 6, right: 3, distance: 3)
     ]]
 ))
-func combine(input: (left: [Int], right: [Int]), expect: [combination]) async throws {
+func t_combine(input: (left: [Int], right: [Int]), expect: [combination]) async throws {
 
     let got = try combine(left: input.left, right: input.right)
 
@@ -28,7 +28,7 @@ func combine(input: (left: [Int], right: [Int]), expect: [combination]) async th
         31
     ]
 ))
-func calc(input: (left: [Int], right: [Int]), expect: Int) async throws {
+func t_calc(input: (left: [Int], right: [Int]), expect: Int) async throws {
 
     let got = try calc(left: input.left, right: input.right)
 
