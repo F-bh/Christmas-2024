@@ -41,13 +41,15 @@ func instructionParseErr(input: String, expected: Day3Error) async throws {
 
 @Test("day 3 test parsing", arguments: zip(
     [
-        "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
+        "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
     ],
     [
         [
             Instruction.mul(2,4),
+            Instruction.deactivate,
             Instruction.mul(5,5),
             Instruction.mul(11,8),
+            Instruction.activate,
             Instruction.mul(8,5),
         ]
     ]
@@ -56,6 +58,7 @@ func instructionParseAll(input: String, expected: [Instruction]) async throws {
    let got = try parse_instructions(input: input)
    #expect(got == expected)
 }
+
 
 @Test("day 3 test instruction calc", arguments: zip(
     [
@@ -72,7 +75,7 @@ func instructionParseAll(input: String, expected: [Instruction]) async throws {
 ))
 func calc(input: [Instruction], expected: Int) async throws{
     let got = input.reduce(0) { acc, val in
-         acc + val.calc()
+         acc + (val.calc() ?? 0)
     }
 
     #expect(got == expected)

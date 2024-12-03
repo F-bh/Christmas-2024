@@ -5,11 +5,17 @@ enum Day3Error: Error {
 
 enum Instruction: Equatable {
     case mul(Int,Int)
+    case activate
+    case deactivate
 
-    func calc() -> Int {
+    func calc() -> Int? {
         switch self {
             case let.mul(x, y):
                 return x*y
+        case .activate:
+            return nil
+        case .deactivate:
+            return nil
         }
     }
 
@@ -43,13 +49,30 @@ enum Instruction: Equatable {
             return i
         }
 
-        guard split.count == 2 else {
-            throw Day3Error.IllegalInput
-        }
 
         let instructionString = input[..<open]
 
+
+        if instructionString.contains("don't"){
+            self = .deactivate
+            return
+        }
+        
+        if instructionString.contains("do"){
+            self = .activate
+            return
+        }
+
         if instructionString.contains("mul") {
+            guard split.count == 2 else {
+                throw Day3Error.IllegalInput
+            }
+
+            let instructionStart = input.index(open, offsetBy: -3)
+            guard input[instructionStart..<open] == "mul" else {
+                throw Day3Error.IllegalInstruction
+            }
+
             self = .mul(split[0], split[1])
             print("found!: \(self) in: \(input)")
             return
